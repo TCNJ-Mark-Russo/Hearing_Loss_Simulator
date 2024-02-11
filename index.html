@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- SEO Optimization -->
+    <!-- Update Content Attributes -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>TCNJ Hearing Loss Simulator</title>
+
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="rating" content="safe for kids" />
+    <meta name="revised" content="" />
+
+    <!-- Open Graph Protocol -->
+    <!-- If you wish to share this webpage on social media, uncomment this HTML Section, and update the content attributes -->
+    <meta property="og:title" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="" />
+    <meta property="og:description" content="" />
+    <meta property="og:image" content="" />
+
+    <!-- Icons -->
+    <link rel="icon" type="image/x-icon" href="" />
+
+    <!-- CSS files -->
+    <link rel="stylesheet" href="styles.css" />
+
+</head>
+<body>
+    <header>
+        <div>
+            <h1>TCNJ Hearing Loss Simulator</h1>
+        </div>
+    </header>
+    <main>
+        <div id="contentContainer">
+            <table>
+                <tr id="tr_header">
+                   <td>
+                        <input id="importInput" type="file" accept="video/*" value="Import Video"></input>
+                   </td>
+                   <td> Presets:
+                    <select name="eq_preset" id="eq_preset" disabled>
+                        <option value="1">Default</option>
+                        <option value="2">Bass Boost</option>
+                        <option value="3">Treble Boost</option>
+                        <option value="4">Vocal Boost</option>
+                        <option value="11">Custom</option>
+                    </select>
+                    <span style="float:right;">v0.1</span>
+                   </td>
+                </tr>
+                <tr id="tr_video">
+                   <td id="td_video">
+                        <video id="video" width="500" height="300" autoplay="true" controls playsinline></video>
+                   </td>
+                    <td>
+                        <table id="id_eq">
+                            <thead>
+                                <tr>
+                                    <th>Frequency</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tr>
+                                <td>32 Hz</td>
+                                <td><input id="id_f32" type="range" min="-40" max="40" step="1" disabled/></td>
+                                <td style="width:52px" id="32_val">+0 dB</td>
+                            </tr>
+                            <tr>
+                                <td>64 Hz</td>
+                                <td><input id="id_f64" type="range" min="-40" max="40" step="1" disabled/></td>
+                                <td id="64_val">+0 dB</td>
+                            </tr>
+                            <tr>
+                                <td>125 Hz</td>
+                                <td><input id="id_f125" type="range" min="-40" max="40" step="1" disabled/></td>
+                                <td id="125_val">+0 dB</td>
+                            </tr>
+                            <tr>
+                                <td>250 Hz</td>
+                                <td><input id="id_f250" type="range" min="-40" max="40" step="1" disabled/></td>
+                                <td id="250_val">+0 dB</td>
+                            </tr>
+                            <tr>
+                                <td>500 Hz</td>
+                                <td><input id="id_f500" type="range" min="-40" max="40" step="1" disabled/></td>
+                                <td id="500_val">+0 dB</td>
+                            </tr>
+                            <tr>
+                                <td>1000 Hz</td>
+                                <td><input id="id_f1000" type="range" min="-40" max="40" step="1" disabled/></td>
+                                <td id="1000_val">+0 dB</td>
+                            </tr>
+                            <tr>
+                                <td>2000 Hz</td>
+                                <td><input id="id_f2000" type="range" min="-40" max="40" step="1" disabled/></td>
+                                <td id="2000_val">+0 dB</td>
+                            </tr>
+                            <tr>
+                                <td>4000 Hz</td>
+                                <td><input id="id_f4000" type="range" min="-40" max="40" step="1" disabled/></td>
+                                <td id="4000_val">+0 dB</td>
+                            </tr>
+                            <tr>
+                                <td>8000 Hz</td>
+                                <td><input id="id_f8000" type="range" min="-40" max="40" step="1" disabled/></td>
+                                <td id="8000_val">+0 dB</td>
+                            </tr>
+                            <tr>
+                                <td>16000 Hz</td>
+                                <td><input id="id_f16000" type="range" min="-40" max="40" step="1" disabled/></td>
+                                <td id="16000_val">+0 dB</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div id="div_surfer"></div>
+                        <!-- <canvas id="visualizer"></canvas> -->
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </main>
+    <footer>
+        <div>
+            <p xmlns:cc="http://creativecommons.org/ns#" >This work is licensed under <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1"></a></p>
+        </div>
+    </footer>
+
+<script type="module" src="./script.js" async defer></script>
+
+</body>
+</html>
