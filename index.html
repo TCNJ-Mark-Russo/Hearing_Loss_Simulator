@@ -3,7 +3,6 @@
 
 <head>
     <!-- SEO Optimization -->
-    <!-- Update Content Attributes -->
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -17,7 +16,6 @@
     <meta name="revised" content="" />
 
     <!-- Open Graph Protocol -->
-    <!-- If you wish to share this webpage on social media, uncomment this HTML Section, and update the content attributes -->
     <meta property="og:title" content="" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="" />
@@ -28,114 +26,783 @@
     <link rel="icon" type="image/x-icon" href="" />
 
     <!-- CSS files -->
-    <link rel="stylesheet" href="styles.css" />
-
+    <!-- <link rel="stylesheet" href="styles.css" /> -->
+    <style>
+        * {
+            font-family: Arial, Helvetica, sans-serif
+        }
+        header {
+            text-align: center;
+            font-family: Arial, sans-serif, 'Arial Narrow';
+            font-size: 24pt;
+            padding: 5px;
+        }
+        #contentContainer {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        #contentContainer table {
+            background: whitesmoke;
+        }
+        #recordingContent {
+            display: flex;
+            flex-direction: column;
+        }
+        #id_init {
+            width: 100%;
+        }
+        table, td {
+            border: 0;
+            border-collapse: collapse;
+            padding: 0px;
+        }
+        #td_audiogram {
+            background: lightgray;
+        }
+        #tr_video {
+            background: whitesmoke;
+            vertical-align: top;
+        }
+        #td_footer {
+            text-align: center;
+            font-size: 8pt;
+            padding: 5px;
+        }
+        #td_video {
+            position: relative;
+            min-width : 533px;
+            min-height: 300px;
+        }
+        #id_video {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width : 533px;
+            height: 300px;
+        }
+        #id_play {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width: 533px;
+            height: 300px;
+            z-index: 1000;
+        }
+        #id_credits {
+            position: absolute;
+            display: none;
+            width: 600px; 
+            top: 100px;
+            left:0;
+            right: 0;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 10px;
+            z-index: 1001;
+            background: rgb(255 255 255 / 0.95)
+        }
+        #id_credits_dismiss {
+            float: right;
+            cursor: default;
+            font-size: 28px;
+        }
+        #id_credits_show {
+            float:left;
+            cursor: default;
+            font-size: 12px;
+            color: black;
+            padding-left: 20px;
+            padding-right: 20px;
+            text-decoration: none;
+        }
+        #id_credits_show:hover {
+            text-decoration:underline;
+        }
+        #id_tcnj {
+            color:rgb(41 63 111);
+            font-family:'Arial Narrow', Arial, sans-serif;
+            font-size: 36px;
+            font-weight:bold; 
+        }
+    </style>
 </head>
 <body>
     <header>
-        <div>
-            <h1>TCNJ Hearing Loss Simulator</h1>
-        </div>
+        <span id="id_tcnj">TCNJ</span> Hearing Loss Simulator
     </header>
     <main>
         <div id="contentContainer">
             <table>
-                <tr id="tr_header">
-                   <td>
-                        <input id="importInput" type="file" accept="video/*" value="Import Video"></input>
-                   </td>
-                   <td> Presets:
-                    <select name="eq_preset" id="eq_preset" disabled>
-                        <option value="1">Default</option>
-                        <option value="2">Bass Boost</option>
-                        <option value="3">Treble Boost</option>
-                        <option value="4">Vocal Boost</option>
-                        <option value="11">Custom</option>
-                    </select>
-                    <span style="float:right;">v0.1</span>
-                   </td>
+                <tr id="tr_header" style="height: 300px;">
+                    <td id="td_video">
+                        <video id="id_video" src="" autoplay="true" playsinline="" controls preload >
+                            <track id="id_track" kind="subtitles" srclang="en" src="" default="" />
+                        </video>
+                        <div id="id_play">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 533 300">
+                                <rect    fill-opacity="0.8" width="533" height="300"></rect>
+                                <circle  fill="black" stroke="white" stroke-width="1" transform="translate(237 107)" cx="30" cy="30" r="30"></circle>
+                                <polygon fill="white" transform="translate(237 107) scale(0.2 0.2)" points="218.79 155.84 119.22 94.34 119.22 217.34 218.79 155.84"></polygon>
+                            </svg>
+                        </div>
+                    </td>
+                    <td id="td_audiogram" rowspan="3" style="vertical-align:top;">
+                        <svg width="600" height="500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" overflow="hidden">
+                        <!-- <svg width="864" height="720" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" overflow="hidden"> -->
+                            <g transform="scale(0.7 0.7)">
+                                <!-- main rectangle -->
+                                <rect id="id_chart" x="126" y="107" width="576" height="576" stroke="#000000" stroke-width="2" stroke-miterlimit="8" fill="#F2F2F2" />
+
+                                <!-- banana -->
+                                <path d="M159.83 301.844C112.113 350.098 267.01 461.691 403.241 456.847 539.473 452.004 
+                                    698.259 318.322 670.895 272.783 643.531 227.244 496.89 340.373 411.713 345.217 326.535 
+                                    350.06 207.546 253.59 159.83 301.844Z"
+                                    fill="#FFFF00" fill-rule="evenodd" fill-opacity="0.6" />
+
+                                <!-- gridlines -->
+                                <path d="M220 107 220 683.156" stroke="#000000" stroke-width="2" stroke-miterlimit="8"
+                                    fill="none" fill-rule="evenodd" />
+                                <path d="M126 152 702.381 152" stroke="#000000" stroke-width="2" stroke-miterlimit="8"
+                                    fill="none" fill-rule="evenodd" />
+                                <path d="M126 196 702.381 196" stroke="#000000" stroke-width="2" stroke-miterlimit="8"
+                                    fill="none" fill-rule="evenodd" />
+                                <path d="M126 240 702.381 240" stroke="#000000" stroke-width="2" stroke-miterlimit="8"
+                                    fill="none" fill-rule="evenodd" />
+                                <path d="M126 285 702.381 285" stroke="#000000" stroke-width="2" stroke-miterlimit="8"
+                                    fill="none" fill-rule="evenodd" />
+                                <path d="M126 329 702.381 329" stroke="#000000" stroke-width="2" stroke-miterlimit="8"
+                                    fill="none" fill-rule="evenodd" />
+                                <path d="M126 373 702.381 373" stroke="#000000" stroke-width="2" stroke-miterlimit="8"
+                                    fill="none" fill-rule="evenodd" />
+                                <path d="M126 418 702.381 418" stroke="#000000" stroke-width="2" stroke-miterlimit="8"
+                                    fill="none" fill-rule="evenodd" />
+                                <path d="M126 462 702.381 462" stroke="#000000" stroke-width="2" stroke-miterlimit="8"
+                                    fill="none" fill-rule="evenodd" />
+                                <path d="M126 506 702.381 506" stroke="#000000" stroke-width="2" stroke-miterlimit="8"
+                                    fill="none" fill-rule="evenodd" />
+                                <path d="M126 551 702.381 551" stroke="#000000" stroke-width="2" stroke-miterlimit="8"
+                                    fill="none" fill-rule="evenodd" />
+                                <path d="M316 107 316 683.156" stroke="#000000" stroke-width="2" stroke-miterlimit="8"
+                                    fill="none" fill-rule="evenodd" />
+                                <path d="M412 107 412 683.156" stroke="#000000" stroke-width="2" stroke-miterlimit="8"
+                                    fill="none" fill-rule="evenodd" />
+                                <path d="M508 107 508 683.156" stroke="#000000" stroke-width="2" stroke-miterlimit="8"
+                                    fill="none" fill-rule="evenodd" />
+                                <path d="M605 107 605 683.156" stroke="#000000" stroke-width="2" stroke-miterlimit="8"
+                                    fill="none" fill-rule="evenodd" />
+                                <path d="M126 595 702.381 595" stroke="#000000" stroke-width="2" stroke-miterlimit="8"
+                                    fill="none" fill-rule="evenodd" />
+                                <path d="M126 639 702.381 639" stroke="#000000" stroke-width="2" stroke-miterlimit="8"
+                                    fill="none" fill-rule="evenodd" />
+
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="400" font-size="21"
+                                    transform="translate(84.1742 114)">-</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="400" font-size="21"
+                                    transform="translate(91.3409 114)">10</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="400" font-size="21"
+                                    transform="translate(103.079 158)">0</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="400" font-size="21"
+                                    transform="translate(91.2948 202)">10</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="400" font-size="21"
+                                    transform="translate(91.2158 247)">20</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="400" font-size="21"
+                                    transform="translate(91.2948 291)">30</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="400" font-size="21"
+                                    transform="translate(91.2933 335)">40</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="400" font-size="21"
+                                    transform="translate(91.2081 379)">50</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="400" font-size="21"
+                                    transform="translate(91.2078 424)">60</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="400" font-size="21"
+                                    transform="translate(91.2078 468)">70</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="400" font-size="21"
+                                    transform="translate(91.2078 512)">80</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="400" font-size="21"
+                                    transform="translate(91.2078 556)">90</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="400" font-size="21"
+                                    transform="translate(79.5102 601)">100</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="400" font-size="21"
+                                    transform="translate(79.5102 645)">110</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="400" font-size="21"
+                                    transform="translate(79.5102 689)">120</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="400" font-size="24"
+                                    transform="matrix(-1.83697e-16 -1 1 -1.83697e-16 74.3299 572)">Loudness (Measured in Decibels)</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="400" font-size="21"
+                                    transform="translate(113.352 91)">125</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="400" font-size="21"
+                                    transform="translate(204.523 91)">250</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="400" font-size="21"
+                                    transform="translate(296.963 91)">500</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="400" font-size="21"
+                                    transform="translate(385.481 91)">1000</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="400" font-size="21"
+                                    transform="translate(486.005 91)">2000</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="400" font-size="21"
+                                    transform="translate(585.072 91)">4000</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="400" font-size="21"
+                                    transform="translate(684.139 91)">8000</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="400" font-size="24"
+                                    transform="translate(249.789 49)">Pitch (Measured in Frequency)</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="400" font-size="21"
+                                    transform="translate(746.393 183)">Normal</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="400" font-size="21"
+                                    transform="translate(746.393 273)">Mild</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="400" font-size="21"
+                                    transform="translate(746.393 298)">Loss</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="400" font-size="21"
+                                    transform="translate(746.393 367)">Moderate</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="400" font-size="21"
+                                    transform="translate(746.393 392)">Loss</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="400" font-size="21"
+                                    transform="translate(746.393 479)">Severe</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="400" font-size="21"
+                                    transform="translate(746.393 504)">Loss</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="400" font-size="21"
+                                    transform="translate(746.393 613)">Profound</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="400" font-size="21"
+                                    transform="translate(746.393 638)">Loss</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="700" font-size="19"
+                                    transform="translate(242.671 279)">Z</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="700" font-size="19"
+                                    transform="translate(642.325 235)">th</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="700" font-size="19"
+                                    transform="translate(259.772 271)">V</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="700" font-size="19"
+                                    transform="translate(616.939 235)">f</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="700" font-size="19"
+                                    transform="translate(201.285 335)">J</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="700" font-size="19"
+                                    transform="translate(624.939 254)">s</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="700" font-size="19"
+                                    transform="translate(243.705 333)">m d b</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="700" font-size="19"
+                                    transform="translate(554.535 277)">k</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="700" font-size="19"
+                                    transform="translate(442.905 264)">p</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="700" font-size="19"
+                                    transform="translate(273.703 343)">n</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="700" font-size="19"
+                                    transform="translate(458.903 275)">h</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="700" font-size="19"
+                                    transform="translate(474.902 281)">g</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="700" font-size="19"
+                                    transform="translate(257.991 355)">ng</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="700" font-size="19"
+                                    transform="translate(437.83 303)">ch</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="700" font-size="19"
+                                    transform="translate(273.703 371)">e l</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="700" font-size="19"
+                                    transform="translate(449.752 325)">sh</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="700" font-size="19"
+                                    transform="translate(273.453 387)">u</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="700" font-size="19"
+                                    transform="translate(340.251 326)">i</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="700" font-size="19"
+                                    transform="translate(337.281 343)">o</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="700" font-size="19"
+                                    transform="translate(359.443 341)">a</text>
+                                <text font-family="Arial,Arial_MSFontService,sans-serif" font-weight="700" font-size="19"
+                                    transform="translate(378.055 349)">r</text>
+                                
+                                <!-- Right braces -->
+                                <path
+                                    d="M705.5 107.5C714.337 107.5 721.5 108.694 721.5 110.167L721.5 169.834C721.5 171.306 728.664 172.5 737.5 172.5 728.664 172.5 721.5 173.694 721.5 175.167L721.5 234.834C721.5 236.306 714.337 237.5 705.5 237.5"
+                                    stroke="#4E95D9" stroke-width="3" stroke-linejoin="round" stroke-miterlimit="10"
+                                    fill="none" fill-rule="evenodd" />
+                                <path
+                                    d="M705.5 240.5C714.337 240.5 721.5 241.694 721.5 243.167L721.5 281.334C721.5 282.806 728.664 284 737.5 284 728.664 284 721.5 285.194 721.5 286.667L721.5 324.834C721.5 326.306 714.337 327.5 705.5 327.5"
+                                    stroke="#4E95D9" stroke-width="3" stroke-linejoin="round" stroke-miterlimit="10"
+                                    fill="none" fill-rule="evenodd" />
+                                <path
+                                    d="M705.5 330.5C714.337 330.5 721.5 331.694 721.5 333.167L721.5 371.334C721.5 372.806 728.664 374 737.5 374 728.664 374 721.5 375.194 721.5 376.667L721.5 414.834C721.5 416.306 714.337 417.5 705.5 417.5"
+                                    stroke="#4E95D9" stroke-width="3" stroke-linejoin="round" stroke-miterlimit="10"
+                                    fill="none" fill-rule="evenodd" />
+                                <path
+                                    d="M705.5 418.5C714.337 418.5 721.5 419.694 721.5 421.167L721.5 481.833C721.5 483.306 728.664 484.5 737.5 484.5 728.664 484.5 721.5 485.694 721.5 487.167L721.5 547.833C721.5 549.306 714.337 550.5 705.5 550.5"
+                                    stroke="#4E95D9" stroke-width="3" stroke-linejoin="round" stroke-miterlimit="10"
+                                    fill="none" fill-rule="evenodd" />
+                                <path
+                                    d="M705.5 553.5C714.337 553.5 721.5 554.694 721.5 556.167L721.5 614.834C721.5 616.306 728.664 617.5 737.5 617.5 728.664 617.5 721.5 618.694 721.5 620.167L721.5 678.833C721.5 680.306 714.337 681.5 705.5 681.5"
+                                    stroke="#4E95D9" stroke-width="3" stroke-linejoin="round" stroke-miterlimit="10"
+                                    fill="none" fill-rule="evenodd" />
+
+                                <!-- audiogram arcs between buttons -->
+                                <line id="l0102" x1="126" y1="175" x2="220" y2="175" stroke="#C00000" stroke-width="4" stroke-miterlimit="8" fill="none"/>
+                                <line id="l0205" x1="220" y1="175" x2="316" y2="175" stroke="#C00000" stroke-width="4" stroke-miterlimit="8" fill="none"/>
+                                <line id="l0510" x1="316" y1="175" x2="412" y2="175" stroke="#C00000" stroke-width="4" stroke-miterlimit="8" fill="none"/>
+                                <line id="l1020" x1="412" y1="175" x2="508" y2="175" stroke="#C00000" stroke-width="4" stroke-miterlimit="8" fill="none"/>
+                                <line id="l2040" x1="508" y1="175" x2="604" y2="175" stroke="#C00000" stroke-width="4" stroke-miterlimit="8" fill="none"/>
+                                <line id="l4080" x1="604" y1="175" x2="700" y2="175" stroke="#C00000" stroke-width="4" stroke-miterlimit="8" fill="none"/>
+
+                                <!-- audiogram button -->
+                                <circle id="b125"  cx="126" cy="175" r="10" stroke="#C00000" stroke-width="4" stroke-miterlimit="8" fill="#FFFFFF" />
+                                <circle id="b250"  cx="220" cy="175" r="10" stroke="#C00000" stroke-width="4" stroke-miterlimit="8" fill="#FFFFFF" />
+                                <circle id="b500"  cx="316" cy="175" r="10" stroke="#C00000" stroke-width="4" stroke-miterlimit="8" fill="#FFFFFF" />
+                                <circle id="b1000" cx="412" cy="175" r="10" stroke="#C00000" stroke-width="4" stroke-miterlimit="8" fill="#FFFFFF" />
+                                <circle id="b2000" cx="508" cy="175" r="10" stroke="#C00000" stroke-width="4" stroke-miterlimit="8" fill="#FFFFFF" />
+                                <circle id="b4000" cx="604" cy="175" r="10" stroke="#C00000" stroke-width="4" stroke-miterlimit="8" fill="#FFFFFF" />
+                                <circle id="b8000" cx="700" cy="175" r="10" stroke="#C00000" stroke-width="4" stroke-miterlimit="8" fill="#FFFFFF" />
+
+                                <!-- Event handler layer -->
+                                <rect id="lyr" style="display:none;" x="0" y="0" width="864" height="720" fill="#FFFFFF" opacity="0.0"/>
+                            </g>
+                        </svg>
+                    </td>
                 </tr>
                 <tr id="tr_video">
-                   <td id="td_video">
-                        <video id="video" width="500" height="300" autoplay="true" controls playsinline></video>
-                   </td>
-                    <td>
-                        <table id="id_eq">
-                            <thead>
-                                <tr>
-                                    <th>Frequency</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tr>
-                                <td>32 Hz</td>
-                                <td><input id="id_f32" type="range" min="-40" max="40" step="1" disabled/></td>
-                                <td style="width:52px" id="32_val">+0 dB</td>
-                            </tr>
-                            <tr>
-                                <td>64 Hz</td>
-                                <td><input id="id_f64" type="range" min="-40" max="40" step="1" disabled/></td>
-                                <td id="64_val">+0 dB</td>
-                            </tr>
-                            <tr>
-                                <td>125 Hz</td>
-                                <td><input id="id_f125" type="range" min="-40" max="40" step="1" disabled/></td>
-                                <td id="125_val">+0 dB</td>
-                            </tr>
-                            <tr>
-                                <td>250 Hz</td>
-                                <td><input id="id_f250" type="range" min="-40" max="40" step="1" disabled/></td>
-                                <td id="250_val">+0 dB</td>
-                            </tr>
-                            <tr>
-                                <td>500 Hz</td>
-                                <td><input id="id_f500" type="range" min="-40" max="40" step="1" disabled/></td>
-                                <td id="500_val">+0 dB</td>
-                            </tr>
-                            <tr>
-                                <td>1000 Hz</td>
-                                <td><input id="id_f1000" type="range" min="-40" max="40" step="1" disabled/></td>
-                                <td id="1000_val">+0 dB</td>
-                            </tr>
-                            <tr>
-                                <td>2000 Hz</td>
-                                <td><input id="id_f2000" type="range" min="-40" max="40" step="1" disabled/></td>
-                                <td id="2000_val">+0 dB</td>
-                            </tr>
-                            <tr>
-                                <td>4000 Hz</td>
-                                <td><input id="id_f4000" type="range" min="-40" max="40" step="1" disabled/></td>
-                                <td id="4000_val">+0 dB</td>
-                            </tr>
-                            <tr>
-                                <td>8000 Hz</td>
-                                <td><input id="id_f8000" type="range" min="-40" max="40" step="1" disabled/></td>
-                                <td id="8000_val">+0 dB</td>
-                            </tr>
-                            <tr>
-                                <td>16000 Hz</td>
-                                <td><input id="id_f16000" type="range" min="-40" max="40" step="1" disabled/></td>
-                                <td id="16000_val">+0 dB</td>
-                            </tr>
-                        </table>
+                    <td style="padding:2px;">
+                        <input id="id_import" type="file" accept="video/*; .vtt" value="Import Video and WebVTT" multiple="multiple"></input>
                     </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>
+                        
+                        <a href="#" id="id_credits_show">
+                            <img src="tcnj-logo-vertical.png" style="width:50px" /><br/>
+                            CREDITS</a>
+                        <table style="margin-left: auto; margin-right:auto;">
+                        <tr>
+                            <td colspan="2"><b>Hearing Loss Audiogram Presets</b></td>
+                        </tr><tr>
+                            <td><input type="radio" id="btn_normal_hearing" name="presets" value="normal_hearing" /></td>
+                            <td>Normal</td>
+                        </tr><tr>
+                            <td><input type="radio" id="btn_mild_loss" name="presets" value="mild_loss" /></td>
+                            <td>Mild Loss</td>
+                        </tr><tr>
+                            <td><input type="radio" id="btn_moderate_loss" name="presets" value="moderate_loss" /></td>
+                            <td>Moderate Loss</td>
+                        </tr><tr>
+                            <td><input type="radio" id="btn_severe_loss" name="presets" value="severe_loss" /></td>
+                            <td>Severe Loss</td>
+                        </tr><tr>
+                            <td><input type="radio" id="btn_profound_loss" name="presets" value="profound_loss" /></td>
+                            <td>Profound Loss</td>
+                        </tr><tr>
+                            <td><input type="radio" id="btn_custom" name="presets" value="custom" /></td>
+                            <td>Custom</td>
+                        </tr>
+                        </table>
+
+                        <!-- <p>An audiogram measures the intensity, or loudness, that a sound must be in a 
+                            specific frequency range for a certain person to hear it. 
+                            This is measured in decibels (Db) and ranges from -10 to 120 on the audiogram. 
+                            Low-decibel sounds include human whispers and high-decibel sounds include a 
+                            nearby fire alarm.
+                        </p>
+                        <p>
+                            The frequency, or the pitch, of the sound is measured in the range 125 to 8,000 
+                            as hertz (Hz). Low-frequency sounds include road vehicles and air conditioning. 
+                            High-frequency sounds include small bird chirps and the sound of pronounced 
+                            letters like "f", "s", and "th".
+                        </p> -->
+                    </td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td colspan="2">
                         <div id="div_surfer"></div>
-                        <!-- <canvas id="visualizer"></canvas> -->
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" id="td_footer">
+                        <p xmlns:cc="http://creativecommons.org/ns#" >
+                            This work is licensed under 
+                            <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0</a>
+                            <img style="height:15px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:15px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><img style="height:15px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1"><img style="height:15px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1">
+                            <span style="float:right;">v0.6</span>
+                        </p>
                     </td>
                 </tr>
             </table>
+            <div id="id_credits">
+                <div id="id_credits_dismiss">✕</div>
+                <div style="text-align: center; font-size:28px;">Credits</div>
+                <p>This video was created as a collaborative project at The College of New Jersey,
+                    2000 Pennington Road, Ewing, NJ 08628.</p>
+                <p>Gabriella Hairston, Madison Frunzi, Samantha Ahlborn, and Aria Abalos under the direction of 
+                    <a href="https://education.tcnj.edu/education-faculty/lynn-smith/" target="blank">Dr. Lynn Smith</a>, 
+                    <a href="https://specialeducation.tcnj.edu/programs/speech-pathology/" target="blank">Speech-Language Pathology and Audiology Program</a>.</p>
+                <p>Simon Blamo and Amanda Piantanida under the direction of 
+                    <a href="https://science.tcnj.edu/science_faculty/mark-russo/" target="blank">Dr. Mark Russo</a>,
+                    <a href="https://computerscience.tcnj.edu/" target="blank">Department of Computer Science</a>.
+                </p>
+                <div><img style="width:50%; display:block; margin: auto;" src="tcnj-logo-horizontal.png" /></div>
+            </div>
         </div>
     </main>
-    <footer>
-        <div>
-            <p xmlns:cc="http://creativecommons.org/ns#" >This work is licensed under <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY-NC-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/nc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1"></a></p>
-        </div>
-    </footer>
 
-<script type="module" src="./script.js" async defer></script>
+<script type="module" async defer>
+    import WaveSurfer  from 'https://unpkg.com/wavesurfer.js@7/dist/wavesurfer.esm.js'
+    
+    // Utility functions
+    function el(id) { return document.getElementById(id); }
 
+    // Parse the scale y-value from the element transform attribute and return
+    function getScaleY(el) {
+        const xform = el.getAttribute("transform");
+        if (xform) {                                    // Parse y-scale value
+            const m = xform.match(/scale\(([-.\d]+)\s+([-.\d]+)\s*\)/);
+            return parseFloat(m[2]);
+        } else {
+            return 0;                                   // If no tranform attribute, translate amount is 0
+        }
+    }
+
+    // Make an element draggable by giving it a mousedown event handler that saves the starting locations,
+    // and configs the event handling layer to manage all subsequent events.
+    function makeDraggable(id) {
+        const elm = el(id);
+        elm.onmousedown = function(e) {
+            lyr.startY = e.clientY;                     // Save start mouse position
+            lyr.target = e.target;                      // Save pressed target element
+                                                        // Save start element location
+            lyr.elementY = parseInt(e.target.getAttribute('cy'));   
+            lyr.style.display="block";                  // Show event handling layer element
+        };
+    }
+
+    // Hide the video play button overlay, if it exists
+    function hidePlayButton() {
+        let play = el('id_play');
+        if (play) play.style.display = "none";
+    }
+
+    // Globals
+    const sliderMap = new Map();                // Map from slider element ID to Slider object
+    const presetMap = new Map();                // Map from hearing loss name to audiogram settings
+    let wavesurfer  = null;                     // Current WaveSurfer object, if any.
+    
+    // Preset Audiogram Profiles
+    presetMap.set('normal_hearing',{'b125':20,  'b250':15,  'b500':10, 'b1000':15,  'b2000':20,  'b4000':15,  'b8000':20});
+    presetMap.set('mild_loss',     {'b125':40,  'b250':35,  'b500':35, 'b1000':40,  'b2000':35,  'b4000':40,  'b8000':30});
+    presetMap.set('moderate_loss', {'b125':50,  'b250':40,  'b500':40, 'b1000':50,  'b2000':50,  'b4000':45,  'b8000':50});
+    presetMap.set('severe_loss',   {'b125':70,  'b250':70,  'b500':75, 'b1000':70,  'b2000':80,  'b4000':90,  'b8000':90});
+    presetMap.set('profound_loss', {'b125':100, 'b250':110, 'b500':95, 'b1000':100, 'b2000':110, 'b4000':105, 'b8000':100});
+    
+    // Set the slider presets to the values given by the preset Map key name and check the related radio button.
+    function selectAudiogramPresets(name) {
+        console.log(name);
+        if (presetMap.has(name)) {
+            let preset = presetMap.get(name);
+            for (let freq in preset) {
+                sliderMap.get(freq).setdB( preset[freq] ); 
+            }
+        }
+        el('btn_'+name).checked = true;
+    }
+
+    // Load video and cue files from a URL
+    function loadFromURLs(videoPath, cuePath) {
+        rebuildMediaFramework();           // Rebuild and replace media framework
+        const videoElem = el('id_video');  // Get the video element object
+        const trackElem = el('id_track');  // Video track element
+        
+        if (cuePath  ) { trackElem.src = cuePath;   }
+        if (videoPath) { videoElem.src = videoPath; }
+        rebuildWaveSurfer();
+        //if (videoPath || cuePath) { videoElem.play(); }
+    }
+
+    // When the video selected changes
+    function loadFromFiles() {
+        hidePlayButton();                   // Hide play button, if exists.
+        const fileElem  = el('id_import');  // Gets the file element object
+
+        // Select files based on extension
+        let videoFile = null;
+        let cueFile   = null;
+        for (let i = 0; i < fileElem.files.length; ++i) {
+            let f = fileElem.files[i];
+            let fileName = f.name.trim();
+            if (fileName.endsWith(".vtt")) {
+                cueFile = f;
+            } else {
+                videoFile = f;
+            }
+        }
+
+        // Validate that at least one suitable file was selected
+        if (!videoFile && !cueFile) {
+            //alert("Please select a video file and/or a WebVTT cue file (.vtt).");
+            return;
+        }
+
+        let videoSrc = el('id_video').src;  // Save existing source URLs
+        let cueSrc   = el('id_track').src;
+        rebuildMediaFramework();            // Rebuild media elements and replace in DOM
+        const videoElem = el('id_video');   // Get the new video element
+        const trackElem = el('id_track');   // Get the new track element
+
+        // If a videoFile provided, load and play it
+        if (videoFile) {
+            videoElem.src = URL.createObjectURL(videoFile);
+            videoElem.onload = (e) => { URL.revokeObjectURL(videoElem.src); };
+            videoElem.play();
+            rebuildWaveSurfer();
+        } else {
+            videoElem.src = videoSrc;
+            videoElem.play();
+            rebuildWaveSurfer();
+        }
+
+        // If a cue file provided, load data
+        if (cueFile) {
+            if( videoElem.textTracks.length == 0) { 
+                videoElem.addTextTrack("subtitles","","en"); 
+            }
+            trackElem.src = URL.createObjectURL(cueFile);
+        } else {
+            if (trackElem.src) URL.revokeObjectURL(trackElem.src);
+            //trackElem.src = cueSrc;   // Do not reload cue file if not provided
+        }
+
+        // Init to normal hearing
+        selectAudiogramPresets("normal_hearing");
+    }
+    
+    // Rebuild and replace the whole video media framework, 
+    // including video element, track, audio context, filters, sliders, etc.
+    function rebuildMediaFramework() {
+        // Rebuilds and replaces the following in <td id="td_video">
+        //<video id="id_video" src="" autoplay playsinline controls preload >
+        //    <track id="id_track" kind="subtitles" srclang="en" src="" default="" />
+        //</video>
+        
+        // Create a new video element every time a new video is loaded
+        let video           = document.createElement("video"); 
+        video.pause();      // This MUST be done otherwise browser gets very unhappy. 
+        video.setAttribute('id',          'id_video');
+        video.setAttribute('autoplay',    'true');
+        video.setAttribute('controls',    'true');
+        video.setAttribute('playsinline', 'true');
+        video.setAttribute('preload',     'true');
+
+        let track           = document.createElement("track");
+        track.setAttribute('id',      'id_track');
+        track.setAttribute('kind',    'subtitles');
+        track.setAttribute('srclang', 'en');
+        track.setAttribute('default', 'true');
+        video.appendChild(track);
+
+        // Create Web Audio context
+        let audioContext = new AudioContext();
+    
+        // Create filters for each band in pipeline and store in array.
+        // Bands [125, 250, 500, 1000, 2000, 4000, 8000]
+        let filters = [
+            new BiquadFilterNode(audioContext, {
+                type: 'lowshelf', // node type
+                gain: 0.0,        // gain
+                Q: 1,             // resonance
+                frequency: 125    // frequency 
+            }),
+            new BiquadFilterNode(audioContext, { type: 'peaking',   gain: 0.0, Q: 1, frequency: 250  }),
+            new BiquadFilterNode(audioContext, { type: 'peaking',   gain: 0.0, Q: 1, frequency: 500  }),
+            new BiquadFilterNode(audioContext, { type: 'peaking',   gain: 0.0, Q: 1, frequency: 1000 }),
+            new BiquadFilterNode(audioContext, { type: 'peaking',   gain: 0.0, Q: 1, frequency: 2000 }),
+            new BiquadFilterNode(audioContext, { type: 'peaking',   gain: 0.0, Q: 1, frequency: 4000 }),
+            new BiquadFilterNode(audioContext, { type: 'highshelf', gain: 0.0, Q: 1, frequency: 8000 })
+        ];
+
+        // Create all Slider objects and map to slider button id
+        sliderMap.clear();
+        sliderMap.set('b125',  new Slider('b125',   null,   'l0102', filters[0]));
+        sliderMap.set('b250',  new Slider('b250',  'l0102', 'l0205', filters[1]));
+        sliderMap.set('b500',  new Slider('b500',  'l0205', 'l0510', filters[2]));
+        sliderMap.set('b1000', new Slider('b1000', 'l0510', 'l1020', filters[3]));
+        sliderMap.set('b2000', new Slider('b2000', 'l1020', 'l2040', filters[4]));
+        sliderMap.set('b4000', new Slider('b4000', 'l2040', 'l4080', filters[5]));
+        sliderMap.set('b8000', new Slider('b8000', 'l4080',  null,   filters[6]));
+
+        // Create an audio MediaElementSourceNode from the video.
+        // In other words, get audio from video.
+        let audioSource = audioContext.createMediaElementSource(video);
+
+        // Build the audio processing pipeline.
+        // Connect audioSource through each filter in series to destination 
+        // so audio data is processed through each filter.
+        audioSource.connect(filters[0])
+                   .connect(filters[1])
+                   .connect(filters[2])
+                   .connect(filters[3])
+                   .connect(filters[4])
+                   .connect(filters[5])
+                   .connect(filters[6])
+                   .connect(audioContext.destination);
+
+        // Init to normal hearing
+        selectAudiogramPresets("normal_hearing");
+
+        // Trigger audiogram preset change when cue detected in text track
+        video.textTracks[0].oncuechange = function (e) {
+            const cues = e.target.activeCues;
+            for (let i = 0; i < cues.length; i++) {
+                let m = cues[i].text.match(/\[(.+)\]/);
+                if (m) { selectAudiogramPresets(m[1]); }
+            }
+        };
+
+        video.onplay        = function(e) { 
+            audioContext.resume();
+            hidePlayButton();
+        };
+        //video.onseeked      = function(e) { console.log("onseeked", video.currentTime); };
+        //video.ontimeupdate  = function(e) { console.log("ontimeupdate", video.currentTime); };
+
+        // Pause and delete video element, if it exists.
+        if (el('id_video') ) { 
+            el('id_video').pause();         // Stop current video, if running
+            el('id_video').remove();        // Delete video element
+        }
+        el('td_video').appendChild(video);  // Append new one
+    }
+
+    // Rebuild the WaveSurfer waveform element
+    function rebuildWaveSurfer() {
+        let video = el("id_video");
+
+        // Re-create a WaveSurfer waveform to visualize the media element, if library loaded.
+        if (WaveSurfer) {
+            // Destroy WaveSurfer object, if it exists
+            if (wavesurfer) {
+                wavesurfer.destroy();
+                wavesurfer = null;
+            }
+            wavesurfer = WaveSurfer.create({
+                container:      document.getElementById('div_surfer'),
+                dragToSeek:     true,
+                mediaControls:  true,
+                media:          video,          // Set video as source media for waveform display
+                waveColor:      'rgb(200, 0, 200)',
+                progressColor:  'rgb(100, 0, 100)',
+            });
+        }
+    }
+
+    // A class that manages the relationship between filters and the audiogram buttons
+    class Slider {
+        constructor(button_id, left_id, right_id, filter) {
+            this.button_id  = button_id;
+            this.button     = el(button_id)
+            this.filter     = filter;
+            this.left       = null;
+            this.right      = null;
+            if (left_id)  this.left  = el(left_id);
+            if (right_id) this.right = el(right_id);
+
+            // Get scale factor of top <g> in svg and save for later
+            const topg      = document.querySelector("svg g");
+            this.scaleFactor = getScaleY( topg );
+            this.dBscale    = -0.2; //-0.333333; // Arbitrary tuning factor to convert dB into filter gain
+            this.top        = 107;      // Top of main audiogram chart rectangle    (rect#id_chart x)
+            this.height     = 576;      // Height of main audigram chart rectangle  (rect#id_chart height)
+            this.bottom     = this.top+this.height;
+            this.offset     = this.top/this.scaleFactor;      // 150? Where does this come from?
+        }
+
+        // Set the decibel value for this slider.
+        // Set the transformed filter value and move the slider button shape.
+        setdB(dB) {
+            // Clip dB to valid range 
+            dB = Math.min(Math.max(dB, -10), 120);
+
+            // Update filter gain value after applying factor
+            if (this.filter) this.filter.gain.value = this.dBscale*dB;
+
+            // Compute to y coordinate of SVG diagram and move button shape
+            const y = dB*this.height/130+this.offset;
+            this.button.setAttribute("cy", `${y}`)
+
+            // Move edges to match button location
+            if (this.left ) { this.left.setAttribute( "y2", `${y}`); }
+            if (this.right) { this.right.setAttribute("y1", `${y}`); }
+        }
+
+        // Takes the y-mouse-coordinate on the audiogram SVG [-50, 350]
+        // calculates equivalent decibels using parameters of audiogram SVG,
+        // Updates filter and moves audiogram slider button,
+        doDrag(dy) {
+            // Calculate new y-location for button. Add offset to start element location
+            const y = Math.round(dy/this.scaleFactor) + lyr.elementY;
+
+            // Limit drag to bounds of audiogram. Bounds determined empirically
+            if(y >= this.top && y <= this.bottom) {
+                this.button.setAttribute("cy", `${y}`)          // Set button location
+                                                                // Move edges to match button
+                if (this.left ) { this.left.setAttribute("y2",  `${y}`); }
+                if (this.right) { this.right.setAttribute("y1", `${y}`); }
+
+                // Compute decibels from y coordinate on SVG audiogram 
+                // Use empirically measured extents of SVG audiogram diagram
+                const dB = 130*(y-this.offset)/this.height;
+
+                // Update filter value
+                if (this.filter) this.filter.gain.value = this.dBscale*dB;
+            }
+        }
+    }
+
+    // === Final event handlers and initializations
+
+    // Make all audiogram sliders draggable
+    makeDraggable("b125");
+    makeDraggable("b250");
+    makeDraggable("b500");
+    makeDraggable("b1000");
+    makeDraggable("b2000");
+    makeDraggable("b4000");
+    makeDraggable("b8000");
+
+    // Set all audiogram preset radio buttons to config slider presets
+    el('btn_normal_hearing' ).onclick = (e) => { selectAudiogramPresets('normal_hearing');  };
+    el('btn_mild_loss'      ).onclick = (e) => { selectAudiogramPresets('mild_loss');       };
+    el('btn_moderate_loss'  ).onclick = (e) => { selectAudiogramPresets('moderate_loss');   };
+    el('btn_severe_loss'    ).onclick = (e) => { selectAudiogramPresets('severe_loss');     };
+    el('btn_profound_loss'  ).onclick = (e) => { selectAudiogramPresets('profound_loss');   };
+    el('btn_custom'         ).onclick = (e) => { selectAudiogramPresets('custom');          };
+
+    // Move element being dragged by handling "glass pane" mousemove events
+    const lyr = document.getElementById("lyr");
+    lyr.onmousemove  = function(e) {
+        const dy = e.clientY - lyr.startY;              // Compute y-coordinate of change in mouse position
+        let slider = sliderMap.get(lyr.target.id);      // Get slider object
+        slider.doDrag(dy);                              // Tell slider how much to move from start
+        selectAudiogramPresets('custom');               // Change preset to custom
+    };
+
+    // Hide "event handler pane" event handler element on mouseup
+    lyr.onmouseup  = function(e) {
+        lyr.target = null;
+        lyr.style.display = "none";
+    };
+
+    // When the selected file list changes, load video file and play it
+    el('id_import').addEventListener("change", loadFromFiles, false);
+
+    el('id_play').onclick = function(ev) { 
+        el('id_video').play();
+        hidePlayButton();          // Hide play button, if exists.
+    };
+
+    el('id_credits_dismiss').onclick = function(e) {
+        el('id_credits').style.display = "none";
+    }
+    el('id_credits_show').onclick = function(e) {
+        el('id_credits').style.display = "block";
+        return false;
+    }
+
+    // Load initial demo video and vtt files
+    if(document.location.href.startsWith("file")) {
+        loadFromFiles();
+    } else {
+        loadFromURLs("hls.mp4", "hls.vtt");
+    }
+
+</script>
 </body>
 </html>
