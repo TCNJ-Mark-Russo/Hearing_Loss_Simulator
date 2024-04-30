@@ -610,13 +610,13 @@
 
         // Create all Slider objects and map to slider button id
         sliderMap.clear();
-        sliderMap.set('b125',  new Slider('b125',   null,   'l0102', filters[0]));
-        sliderMap.set('b250',  new Slider('b250',  'l0102', 'l0205', filters[1]));
-        sliderMap.set('b500',  new Slider('b500',  'l0205', 'l0510', filters[2]));
-        sliderMap.set('b1000', new Slider('b1000', 'l0510', 'l1020', filters[3]));
-        sliderMap.set('b2000', new Slider('b2000', 'l1020', 'l2040', filters[4]));
-        sliderMap.set('b4000', new Slider('b4000', 'l2040', 'l4080', filters[5]));
-        sliderMap.set('b8000', new Slider('b8000', 'l4080',  null,   filters[6]));
+        sliderMap.set('b125',  new Slider('b125',   null,   'l0102', filters[0], -0.10));
+        sliderMap.set('b250',  new Slider('b250',  'l0102', 'l0205', filters[1], -0.10));
+        sliderMap.set('b500',  new Slider('b500',  'l0205', 'l0510', filters[2], -0.15));
+        sliderMap.set('b1000', new Slider('b1000', 'l0510', 'l1020', filters[3], -0.30));
+        sliderMap.set('b2000', new Slider('b2000', 'l1020', 'l2040', filters[4], -0.45));
+        sliderMap.set('b4000', new Slider('b4000', 'l2040', 'l4080', filters[5], -0.50));
+        sliderMap.set('b8000', new Slider('b8000', 'l4080',  null,   filters[6], -0.50));
 
         // Create an audio MediaElementSourceNode from the video.
         // In other words, get audio from video.
@@ -685,7 +685,7 @@
 
     // A class that manages the relationship between filters and the audiogram buttons
     class Slider {
-        constructor(button_id, left_id, right_id, filter) {
+        constructor(button_id, left_id, right_id, filter, dBscale) {
             this.button_id  = button_id;
             this.button     = el(button_id)
             this.filter     = filter;
@@ -697,7 +697,8 @@
             // Get scale factor of top <g> in svg and save for later
             const topg      = document.querySelector("svg g");
             this.scaleFactor = getScaleY( topg );
-            this.dBscale    = -0.2; //-0.333333; // Arbitrary tuning factor to convert dB into filter gain
+            this.dBscale    = dBscale || -0.2; // Arbitrary tuning factor to convert dB into filter gain
+            //this.dBscale    = -0.2; //-0.333333; // Arbitrary tuning factor to convert dB into filter gain
             this.top        = 107;      // Top of main audiogram chart rectangle    (rect#id_chart x)
             this.height     = 576;      // Height of main audigram chart rectangle  (rect#id_chart height)
             this.bottom     = this.top+this.height;
